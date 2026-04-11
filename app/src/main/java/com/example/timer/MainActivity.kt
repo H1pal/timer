@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,6 +25,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.timer.ui.theme.DarkGreen
 import com.example.timer.ui.theme.TimerTheme
+import kotlinx.coroutines.delay
 import kotlinx.serialization.Serializable
 
 class MainActivity : ComponentActivity() {
@@ -69,7 +71,7 @@ object Stopwatch
 object Timer
 
 @Serializable
-object Profile
+object Splash
 
 //enum class Nav_Route(routeName : String, description: String, btnColor: Color) {
 //    HOME("HOME", "메인 화면", Color(0xFFFFFFFF)),
@@ -93,7 +95,7 @@ fun NavigationGraph(modifier: Modifier) {
 
     NavHost(modifier = modifier,
         navController = navController,
-        startDestination = Stopwatch) {
+        startDestination = SplashScreen(navController = navController)) {
         composable<Stopwatch> {
             StopwatchScreen(modifier = modifier, navController = navController)
         }
@@ -120,4 +122,16 @@ fun TimerScreen(modifier: Modifier, navController: NavController) {
     Button(onClick = {navController.navigate(Stopwatch)}, modifier = Modifier) {
         Text("Stopwatch")
     }
+}
+
+@Composable
+fun SplashScreen(navController: NavController) {
+    LaunchedEffect(Unit) {
+        delay(1000)
+
+        navController.navigate(Stopwatch) {
+            popUpTo(Splash) {inclusive = true}
+        }
+    }
+
 }
