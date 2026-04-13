@@ -228,20 +228,32 @@ fun StopwatchScreen(modifier: Modifier, navController: NavController) {
 
 @Composable
 fun TimerScreen(modifier: Modifier, navController: NavController) {
-    TextButton(onClick = {navController.navigate(Stopwatch)},
-        modifier = Modifier,
-        colors = ButtonDefaults.textButtonColors(
-            contentColor = MyGray
-        )
-    ) {
-        Text(text = "← 스톱워치",
-            fontSize = 24.sp,
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        TextButton(onClick = {navController.navigate(Stopwatch)},
+            modifier = Modifier,
+            colors = ButtonDefaults.textButtonColors(
+                contentColor = MyGray
+            )
+        ) {
+            Text(text = "← 스톱워치",
+                fontSize = 24.sp,
+                fontWeight = FontWeight.W600,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(10.dp))
+        }
+
+        Text("타이머 화면 입니다",
             fontWeight = FontWeight.W600,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(10.dp))
+            fontSize = 26.sp,
+            modifier = Modifier.align(Alignment.Center)
+            )
+
+        Row(modifier = Modifier.align(Alignment.BottomCenter)) {
+            TimerButton("중지", modifier = Modifier)
+            TimerButton("시작", modifier = Modifier)
+        }
     }
-
-
 }
 
 @Composable
