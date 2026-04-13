@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -40,10 +39,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.timer.ui.theme.DarkGreen
 import com.example.timer.ui.theme.MyGray
 import com.example.timer.ui.theme.TimerTheme
 import kotlinx.coroutines.delay
@@ -59,27 +60,48 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+data class State(val title: String, val showBar: Boolean)
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview (showBackground = true)
 @Composable
 fun Greeting() {
+    val navController = rememberNavController()
+
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
+
+    val topBarState = when {
+        currentBackStackEntry?.destination?.hasRoute<Timer>() == true ->
+            State("타이머", true)
+        currentBackStackEntry?.destination?.hasRoute<Stopwatch>() == true ->
+            State("스톱워치", true)
+        else -> State("Timer", false)
+    }
+
     TimerTheme {
 
         Scaffold(modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFCED0E0)),
             topBar = {
-                TopAppBar(
-                    title = {
-                        Text(modifier = Modifier.fillMaxWidth(), text = "toptoptop") },
-                    colors = topAppBarColors(
-                        containerColor = DarkGreen,
-                        titleContentColor = Color.White
+                if (topBarState.showBar) {
+                    TopAppBar(
+                        title = {
+                            Text(text = topBarState.title,
+                                fontWeight = FontWeight.W600,
+                                fontSize = 24.sp)
+                        },
+                        colors = topAppBarColors(
+                            containerColor = Color(0xFF0083F0),
+                            titleContentColor = Color.White
+                        )
                     )
-                )
+                }
             }
         ) { innerPadding ->
-            NavigationGraph(modifier = Modifier.padding(innerPadding))
+            NavigationGraph(modifier = Modifier.padding(innerPadding),
+                navController = navController)
         }
     }
 }
@@ -111,8 +133,7 @@ object Splash
 //}
 
 @Composable
-fun NavigationGraph(modifier: Modifier) {
-    val navController = rememberNavController()
+fun NavigationGraph(modifier: Modifier, navController: NavHostController) {
 
     NavHost(
         modifier = modifier,
@@ -289,7 +310,6 @@ fun StopwatchScreen(modifier: Modifier, navController: NavController) {
 
 @Composable
 fun TimerScreen(modifier: Modifier, navController: NavController) {
-
     Box(modifier = Modifier.fillMaxSize()) {
         TextButton(onClick = {navController.navigate(Stopwatch)},
             modifier = Modifier,
