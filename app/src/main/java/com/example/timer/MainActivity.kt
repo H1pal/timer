@@ -25,6 +25,11 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -129,17 +134,19 @@ fun NavigationGraph(modifier: Modifier) {
 }
 
 @Composable
-fun TimerButton(
+fun StopwatchButton(
     name: String,
-    modifier: Modifier
+    color: Color = Color(0xFF0083F0),
+    modifier: Modifier,
+    onClicked: () -> Unit
 ) {
-    Button(onClick = { },
+    Button(onClick = { onClicked() },
         modifier = modifier
             .padding(6.dp)
             .size(170.dp, 60.dp),
         shape = RoundedCornerShape(10.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color(0xFF0083F0),
+            containerColor = color,
             contentColor = Color.White
         )
     ) {
@@ -147,6 +154,14 @@ fun TimerButton(
             fontWeight = FontWeight.W600,
             fontSize = 24.sp)
     }
+}
+
+fun formatTime(seconds: Int): String {
+    val h = seconds / 3600
+    val m = (seconds / 60) % 60
+    val s = seconds % 60
+
+    return "%02d:%02d:%02d".format(h, m, s)
 }
 
 @Composable
@@ -161,6 +176,16 @@ fun StopwatchScreen(modifier: Modifier, navController: NavController) {
 //
 //        Text("Timer", color = MyGray)
 //    }
+    var seconds by remember { mutableIntStateOf(0) }
+    var isRunning by remember { mutableStateOf(false) }
+
+    LaunchedEffect(isRunning) {
+        while (isRunning) {
+            delay(1000)
+            seconds += 1
+        }
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         TextButton(onClick = {navController.navigate(Timer)},
             modifier = Modifier.align(Alignment.TopEnd),
@@ -182,44 +207,80 @@ fun StopwatchScreen(modifier: Modifier, navController: NavController) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("00:00:00",
+            Text(formatTime(seconds),
                 fontWeight = FontWeight.W600,
                 fontSize = 52.sp,
                 modifier = Modifier.padding(6.dp))
 
-            Button(onClick = {},
-                modifier = Modifier
-                    .padding(6.dp)
-                    .size(170.dp, 60.dp),
-                shape = RoundedCornerShape(10.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Red,
-                    contentColor = Color.White
-                )
-            ) {
-                Text("초기화",
-                    fontWeight = FontWeight.W600,
-                    fontSize = 24.sp)
-
+            StopwatchButton(name = "초기화",
+                color = Color.Red,
+                modifier = Modifier) {
+                isRunning = false
+                seconds = 0
             }
+//            Button(onClick = {
+//                isRunning = false
+//                seconds = 0
+//            },
+//                modifier = Modifier
+//                    .padding(6.dp)
+//                    .size(170.dp, 60.dp),
+//                shape = RoundedCornerShape(10.dp),
+//                colors = ButtonDefaults.buttonColors(
+//                    containerColor = Color.Red,
+//                    contentColor = Color.White
+//                )
+//            ) {
+//                Text("초기화",
+//                    fontWeight = FontWeight.W600,
+//                    fontSize = 24.sp)
+//            }
 
         }
 
         Row(modifier = Modifier.align(Alignment.BottomCenter)) {
+            StopwatchButton(name = "중지",
+                modifier = Modifier) {
+                isRunning = false
+            }
+            StopwatchButton(name = "시작",
+                modifier = Modifier) {
+                isRunning = true
+            }
 
-            TimerButton("중지", modifier = Modifier)
-            TimerButton("시작", modifier = Modifier)
 
-//            Button(onClick = {},
-//                modifier = Modifier) {
+//            Button(onClick = {
+//                isRunning = false
+//            },
+//                modifier = Modifier
+//                    .padding(6.dp)
+//                    .size(170.dp, 60.dp),
+//                shape = RoundedCornerShape(10.dp),
+//                colors = ButtonDefaults.buttonColors(
+//                    containerColor = Color(0xFF0083F0),
+//                    contentColor = Color.White
+//                )
+//            ) {
 //                Text("중지",
 //                    fontWeight = FontWeight.W600,
-//                    )
+//                    fontSize = 24.sp)
 //            }
-//            Button(onClick = {},
-//                modifier = Modifier) {
+//
+//            Button(onClick = {
+//                isRunning = true
+//            },
+//                modifier = Modifier
+//                    .padding(6.dp)
+//                    .size(170.dp, 60.dp),
+//                shape = RoundedCornerShape(10.dp),
+//                colors = ButtonDefaults.buttonColors(
+//                    containerColor = Color(0xFF0083F0),
+//                    contentColor = Color.White
+//                )
+//            ) {
 //                Text("시작",
-//                    fontWeight = FontWeight.W600)
+//                    fontWeight = FontWeight.W600,
+//                    fontSize = 24.sp)
 //            }
         }
     }
@@ -250,8 +311,35 @@ fun TimerScreen(modifier: Modifier, navController: NavController) {
             )
 
         Row(modifier = Modifier.align(Alignment.BottomCenter)) {
-            TimerButton("중지", modifier = Modifier)
-            TimerButton("시작", modifier = Modifier)
+            Button(onClick = { },
+                modifier = Modifier
+                    .padding(6.dp)
+                    .size(170.dp, 60.dp),
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF0083F0),
+                    contentColor = Color.White
+                )
+            ) {
+                Text("중지",
+                    fontWeight = FontWeight.W600,
+                    fontSize = 24.sp)
+            }
+
+            Button(onClick = { },
+                modifier = Modifier
+                    .padding(6.dp)
+                    .size(170.dp, 60.dp),
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF0083F0),
+                    contentColor = Color.White
+                )
+            ) {
+                Text("시작",
+                    fontWeight = FontWeight.W600,
+                    fontSize = 24.sp)
+            }
         }
     }
 }
