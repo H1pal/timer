@@ -17,7 +17,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavHostController
@@ -31,7 +30,7 @@ import com.example.timer.ui.screens.TimerScreen
 import com.example.timer.ui.theme.TimerTheme
 import com.example.timer.util.navigation.Splash
 import com.example.timer.util.navigation.Stopwatch
-import java.util.Timer
+import com.example.timer.util.navigation.Timer
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +45,6 @@ class MainActivity : ComponentActivity() {
 data class State(val title: String, val showBar: Boolean)
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview (showBackground = true)
 @Composable
 fun Greeting() {
     val navController = rememberNavController()
