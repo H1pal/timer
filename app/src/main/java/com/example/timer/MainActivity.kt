@@ -29,8 +29,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-data class State(val title: String, val showBar: Boolean)
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Greeting() {
