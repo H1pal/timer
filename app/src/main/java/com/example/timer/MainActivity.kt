@@ -74,4 +74,5 @@ fun NavigationGraph(navController: NavHostController) {
             SplashScreen(navController = navController)
         }
     }
+
 }
