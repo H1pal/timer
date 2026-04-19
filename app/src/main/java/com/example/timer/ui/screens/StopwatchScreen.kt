@@ -1,5 +1,6 @@
 package com.example.timer.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -7,8 +8,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -25,31 +30,46 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.timer.ui.components.StopwatchButton
+import com.example.timer.ui.theme.AntiqueBlue
 import com.example.timer.ui.theme.MyGray
 import com.example.timer.util.navigation.Timer
 import kotlinx.coroutines.delay
 
 
-fun formatTime(seconds: Int): String {
-    val h = seconds / 3600
-    val m = (seconds / 60) % 60
-    val s = seconds % 60
 
-    return "%02d:%02d:%02d".format(h, m, s)
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun StopwatchScreen(modifier: Modifier, navController: NavController) {
+    Scaffold(modifier = modifier
+        .fillMaxSize()
+        .background(AntiqueBlue),
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text("스톱워치",
+                        fontWeight = FontWeight.W600,
+                        fontSize = 24.sp)
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(0xFF0083F0),
+                    titleContentColor = Color.White,
+                )
+            )
+        }
+    ) { innerpadding ->
+
+        StopwatchItems(modifier = Modifier
+            .fillMaxSize()
+            .padding(innerpadding),
+            navController = navController)
+    }
 }
 
 @Composable
-fun StopwatchScreen(modifier: Modifier, navController: NavController) {
-//    Button(modifier = Modifier,
-//        colors = ButtonDefaults.buttonColors(
-//            MaterialTheme.colorScheme.primaryContainer,
-//            MaterialTheme.colorScheme.onPrimaryContainer
-//        ),
-//        onClick = {navController.navigate(Timer)}
-//        ) {
-//
-//        Text("Timer", color = MyGray)
-//    }
+fun StopwatchItems(
+    modifier: Modifier,
+    navController: NavController
+) {
     var seconds by remember { mutableIntStateOf(0) }
     var isRunning by remember { mutableStateOf(false) }
 
@@ -60,8 +80,8 @@ fun StopwatchScreen(modifier: Modifier, navController: NavController) {
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        TextButton(onClick = {navController.navigate(Timer)},
+    Box(modifier = modifier) {
+        TextButton(onClick = { navController.navigate(Timer) },
             modifier = Modifier.align(Alignment.TopEnd),
             colors = ButtonDefaults.textButtonColors(
                 contentColor = MyGray
@@ -74,9 +94,6 @@ fun StopwatchScreen(modifier: Modifier, navController: NavController) {
                 modifier = Modifier.padding(10.dp)
             )
         }
-    }
-
-    Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.align(Alignment.Center),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -92,23 +109,24 @@ fun StopwatchScreen(modifier: Modifier, navController: NavController) {
                 isRunning = false
                 seconds = 0
             }
-//            Button(onClick = {
-//                isRunning = false
-//                seconds = 0
-//            },
-//                modifier = Modifier
-//                    .padding(6.dp)
-//                    .size(170.dp, 60.dp),
-//                shape = RoundedCornerShape(10.dp),
-//                colors = ButtonDefaults.buttonColors(
-//                    containerColor = Color.Red,
-//                    contentColor = Color.White
-//                )
-//            ) {
-//                Text("초기화",
-//                    fontWeight = FontWeight.W600,
-//                    fontSize = 24.sp)
-//            }
+
+            //            Button(onClick = {
+            //                isRunning = false
+            //                seconds = 0
+            //            },
+            //                modifier = Modifier
+            //                    .padding(6.dp)
+            //                    .size(170.dp, 60.dp),
+            //                shape = RoundedCornerShape(10.dp),
+            //                colors = ButtonDefaults.buttonColors(
+            //                    containerColor = Color.Red,
+            //                    contentColor = Color.White
+            //                )
+            //            ) {
+            //                Text("초기화",
+            //                    fontWeight = FontWeight.W600,
+            //                    fontSize = 24.sp)
+            //            }
 
         }
 
@@ -124,40 +142,46 @@ fun StopwatchScreen(modifier: Modifier, navController: NavController) {
             }
 
 
-//            Button(onClick = {
-//                isRunning = false
-//            },
-//                modifier = Modifier
-//                    .padding(6.dp)
-//                    .size(170.dp, 60.dp),
-//                shape = RoundedCornerShape(10.dp),
-//                colors = ButtonDefaults.buttonColors(
-//                    containerColor = Color(0xFF0083F0),
-//                    contentColor = Color.White
-//                )
-//            ) {
-//                Text("중지",
-//                    fontWeight = FontWeight.W600,
-//                    fontSize = 24.sp)
-//            }
-//
-//            Button(onClick = {
-//                isRunning = true
-//            },
-//                modifier = Modifier
-//                    .padding(6.dp)
-//                    .size(170.dp, 60.dp),
-//                shape = RoundedCornerShape(10.dp),
-//                colors = ButtonDefaults.buttonColors(
-//                    containerColor = Color(0xFF0083F0),
-//                    contentColor = Color.White
-//                )
-//            ) {
-//                Text("시작",
-//                    fontWeight = FontWeight.W600,
-//                    fontSize = 24.sp)
-//            }
+            //            Button(onClick = {
+            //                isRunning = false
+            //            },
+            //                modifier = Modifier
+            //                    .padding(6.dp)
+            //                    .size(170.dp, 60.dp),
+            //                shape = RoundedCornerShape(10.dp),
+            //                colors = ButtonDefaults.buttonColors(
+            //                    containerColor = Color(0xFF0083F0),
+            //                    contentColor = Color.White
+            //                )
+            //            ) {
+            //                Text("중지",
+            //                    fontWeight = FontWeight.W600,
+            //                    fontSize = 24.sp)
+            //            }
+            //
+            //            Button(onClick = {
+            //                isRunning = true
+            //            },
+            //                modifier = Modifier
+            //                    .padding(6.dp)
+            //                    .size(170.dp, 60.dp),
+            //                shape = RoundedCornerShape(10.dp),
+            //                colors = ButtonDefaults.buttonColors(
+            //                    containerColor = Color(0xFF0083F0),
+            //                    contentColor = Color.White
+            //                )
+            //            ) {
+            //                Text("시작",
+            //                    fontWeight = FontWeight.W600,
+            //                    fontSize = 24.sp)
+            //            }
         }
     }
+}
+fun formatTime(seconds: Int): String {
+    val h = seconds / 3600
+    val m = (seconds / 60) % 60
+    val s = seconds % 60
 
+    return "%02d:%02d:%02d".format(h, m, s)
 }
