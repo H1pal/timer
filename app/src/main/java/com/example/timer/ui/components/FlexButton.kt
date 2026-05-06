@@ -12,11 +12,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.timer.ui.theme.MyBlue
 
 @Composable
-fun StopwatchButton(
+fun FlexButton(
     name: String,
-    color: Color = Color(0xFF0083F0),
+    color: Color = MyBlue,
     modifier: Modifier,
     onClicked: () -> Unit
 ) {

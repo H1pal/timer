@@ -1,4 +1,4 @@
-package com.example.timer.util.navigation
+package com.example.timer.util.route
 
 import kotlinx.serialization.Serializable
 
