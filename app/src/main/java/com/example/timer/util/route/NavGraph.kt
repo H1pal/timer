@@ -5,9 +5,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.timer.features.Splash.SplashScreen
-import com.example.timer.features.Stopwatch.StopwatchScreen
-import com.example.timer.features.Timer.TimerScreen
+import com.example.timer.features.splashDp.SplashScreen
+import com.example.timer.features.stopwatchDp.StopwatchScreen
+import com.example.timer.features.timerDp.TimerScreen
 
 @Composable
 fun NavigationGraph(navController: NavHostController) {

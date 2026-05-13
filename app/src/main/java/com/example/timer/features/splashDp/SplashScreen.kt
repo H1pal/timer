@@ -1,4 +1,4 @@
-package com.example.timer.features.Splash
+package com.example.timer.features.splashDp
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -33,6 +33,7 @@ fun SplashScreen(navController: NavController) {
         .fillMaxSize()
         .background(AntiqueBlue)
     ) { innerPadding ->
+
 //        SplashItems(
 //            modifier = Modifier
 //            .fillMaxSize()
@@ -44,7 +45,7 @@ fun SplashScreen(navController: NavController) {
             delay(1000)
 
             navController.navigate(Stopwatch) {
-                popUpTo(Splash) {inclusive = true}
+                popUpTo(Splash) { inclusive = true }
             }
         }
 

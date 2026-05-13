@@ -16,7 +16,7 @@ import com.example.timer.ui.theme.MyBlue
 
 @Composable
 fun FlexButton(
-    name: String,
+    actText: String,
     color: Color = MyBlue,
     modifier: Modifier,
     onClicked: () -> Unit
@@ -31,7 +31,8 @@ fun FlexButton(
             contentColor = Color.White
         )
     ) {
-        Text(name,
+        Text(
+            text = actText,
             fontWeight = FontWeight.W600,
             fontSize = 24.sp)
     }

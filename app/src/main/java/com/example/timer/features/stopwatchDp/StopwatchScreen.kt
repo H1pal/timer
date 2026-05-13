@@ -1,4 +1,4 @@
-package com.example.timer.features.Stopwatch
+package com.example.timer.features.stopwatchDp
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -84,7 +84,7 @@ fun StopwatchScreen(modifier: Modifier, navController: NavController) {
                 )
 
                 FlexButton(
-                    name = "초기화",
+                    actText = "초기화",
                     color = Color.Red,
                     modifier = Modifier
                 ) {
@@ -99,14 +99,14 @@ fun StopwatchScreen(modifier: Modifier, navController: NavController) {
             ) {
 
                 FlexButton(
-                    name = "중지",
+                    actText = "중지",
                     modifier = Modifier
                 ) {
                     isRunning = false
                 }
 
                 FlexButton(
-                    name = "시작",
+                    actText = "시작",
                     modifier = Modifier
                 ) {
                     isRunning = true
@@ -157,7 +157,7 @@ fun formatTime(milliSeconds: Int): String {
 //                modifier = Modifier.padding(6.dp)
 //            )
 //
-//            FlexButton(name = "초기화",
+//            FlexButton(actText = "초기화",
 //                color = Color.Red,
 //                modifier = Modifier
 //            ) {
@@ -169,13 +169,13 @@ fun formatTime(milliSeconds: Int): String {
 //        Row(modifier = Modifier.align(Alignment.BottomCenter),
 //            horizontalArrangement = Arrangement.spacedBy(20.dp)) {
 //
-//            FlexButton(name = "중지",
+//            FlexButton(actText = "중지",
 //                modifier = Modifier
 //            ) {
 //                isRunning = false
 //            }
 //
-//            FlexButton(name = "시작",
+//            FlexButton(actText = "시작",
 //                modifier = Modifier
 //            ) {
 //                isRunning = true

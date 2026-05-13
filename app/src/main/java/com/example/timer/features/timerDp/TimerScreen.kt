@@ -1,4 +1,4 @@
-package com.example.timer.features.Timer
+package com.example.timer.features.timerDp
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -60,10 +60,10 @@ fun TimerScreen(modifier: Modifier, navController: NavController) {
             Row(modifier = Modifier.align(Alignment.BottomCenter),
                 horizontalArrangement = Arrangement.spacedBy(20.dp)) {
 
-                FlexButton(name = "중지",
+                FlexButton(actText = "중지",
                     modifier = Modifier) {}
 
-                FlexButton(name = "시작",
+                FlexButton(actText = "시작",
                     modifier = Modifier) {}
             }
         }
@@ -91,10 +91,10 @@ fun TimerScreen(modifier: Modifier, navController: NavController) {
 //        Row(modifier = Modifier.align(Alignment.BottomCenter),
 //            horizontalArrangement = Arrangement.spacedBy(20.dp)) {
 //
-//            FlexButton(name = "중지",
+//            FlexButton(actText = "중지",
 //                modifier = Modifier) {}
 //
-//            FlexButton(name = "시작",
+//            FlexButton(actText = "시작",
 //                modifier = Modifier) {}
 //
 //        }
